@@ -1,33 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+/<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="calendar.css">
-    <script src="calendar.js"></script>
+    <script src="G:\다른 컴퓨터\USB 및 외부 기기\USB_DEVICE_1647783636\vanila_js_fuction\vanila_js_fuction\calendar.js"></script>
 
     <title>Calendar</title>
 </head>
 <body>
-    <div class="sec_cal">
-        <div class="cal_nav">
-          <a href="javascript:;" class="nav-btn go-prev">prev</a>
-          <div class="year-month"></div>
-          <a href="javascript:;" class="nav-btn go-next">next</a>
+  <div class="container">
+    <div class="my-calendar clearfix">
+      <div class="clicked-date">
+        <div class="cal-day"></div>
+        <div class="cal-date"></div>
+      </div>
+      <div class="calendar-box">
+        <div class="ctr-box clearfix">
+          <button type="button" title="prev" class="btn-cal prev">
+          </button>
+          <span class="cal-month"></span>
+          <span class="cal-year"></span>
+          <button type="button" title="next" class="btn-cal next">
+          </button>
         </div>
-        <div class="cal_wrap">
-          <div class="days">
-            <div class="day">MON</div>
-            <div class="day">TUE</div>
-            <div class="day">WED</div>
-            <div class="day">THU</div>
-            <div class="day">FRI</div>
-            <div class="day">SAT</div>
-            <div class="day">SUN</div>
-          </div>
-          <div class="dates"></div>
-        </div>
+        <table class="cal-table">
+          <thead>
+            <tr>
+              <th>S</th>
+              <th>M</th>
+              <th>T</th>
+              <th>W</th>
+              <th>T</th>
+              <th>F</th>
+              <th>S</th>
+            </tr>
+          </thead>
+          <tbody class="cal-body"></tbody>
+        </table>
+      </div>
     </div>
+    <!-- // .my-calendar -->
+  </div>
 </body>
 </html>
