@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"> 
+<head>
+    <meta charset="utf-8">  
+    <link rel="stylesheet" href="digital_clock.css">
+<script> 
+function setClock(){
+    var dateInfo = new Date(); 
+    var hour = modifyNumber(dateInfo.getHours());
+    var min = modifyNumber(dateInfo.getMinutes());
+    var sec = modifyNumber(dateInfo.getSeconds());
+    var year = dateInfo.getFullYear();
+    var month = dateInfo.getMonth()+1; //monthIndex를 반환해주기 때문에 1을 더해준다.
+    var date = dateInfo.getDate();
+    document.getElementById("time").innerHTML = hour + ":" + min  + ":" + sec;
+    document.getElementById("date").innerHTML = year + "년 " + month + "월 " + date + "일";
+}
+function modifyNumber(time){
+    if(parseInt(time)<10){
+        return "0"+ time;
+    }
+    else
+        return time;
+}
+window.onload = function(){
+    setClock();
+    setInterval(setClock,1000); //1초마다 setClock 함수 실행
+}
+</script>    
+</head>
+<body>
+   <div id="time" class="time"></div>
+   <div id="date" class="date"></div>
+</body>
+<style>  
+*{
+    text-align: center;
+    position: relative;
+    top: 50px;
+}
+body{
+    background-color: rgb(68, 168, 175);
+}
+.data{
+    font-size: 45px;
+    color: blueviolet;
+}
+.time{
+    font-size: 100px;
+    font-weight: bold;
+    color: rgb(221, 205, 205);
+}
+</style>
+</html>
