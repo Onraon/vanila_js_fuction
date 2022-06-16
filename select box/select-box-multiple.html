@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="add" type="button">데이터 추가</button>
+    <h5>편집모드시 그리드 타입 활용</h5>
+    <div id="gr_a"></div>
+    <h5>편집모드시 jQuery 활용</h5>
+    <div id="gr_b"></div>
+    <h5>편집모드시 HTML String 활용</h5>
+    <div id="gr_c"></div>
+  </body>
+  <script>
+    // 대 데이터 리스트
+    var dae = [
+      {
+        value: "dae1",
+        text: "대분류1",
+      },
+      {
+        value: "dae2",
+        text: "대분류2",
+      },
+      {
+        value: "dae3",
+        text: "대분류3",
+      },
+    ];
+    // 중 데이터 리스트
+    var jung_1 = [
+      {
+        value: "jung1_1",
+        text: "중분류1-1",
+      },
+      {
+        value: "jung1_2",
+        text: "중분류1-2",
+      },
+    ];
+    var jung_2 = [
+      {
+        value: "jung2_1",
+        text: "중분류2-1",
+      },
+      {
+        value: "jung2_2",
+        text: "중분류2-2",
+      },
+    ];
+    var jung_3 = [
+      {
+        value: "jung3_1",
+        text: "중분류3-1",
+      },
+      {
+        value: "jung3_2",
+        text: "중분류3-2",
+      },
+    ];
+    var jung = {
+      dae1: jung_1,
+      dae2: jung_2,
+      dae3: jung_3,
+    };
+
+    // 소 데이터 리스트
+    var so_1_1 = [
+      {
+        value: "so1_1_1",
+        text: "소분류1-1-1",
+      },
+      {
+        value: "so1_1_2",
+        text: "소분류1-1-2",
+      },
+      {
+        value: "so1_1_3",
+        text: "소분류1-1-3",
+      },
+    ];
+    var so_1_2 = [
+      {
+        value: "so1_2_1",
+        text: "소분류1-2-1",
+      },
+      {
+        value: "so1_2_2",
+        text: "소분류1-2-2",
+      },
+      {
+        value: "so1_2_3",
+        text: "소분류1-2-3",
+      },
+    ];
+    var so_2_1 = [
+      {
+        value: "so2_1_1",
+        text: "소분류2-1-1",
+      },
+      {
+        value: "so2_1_2",
+        text: "소분류2-1-2",
+      },
+      {
+        value: "so2_1_3",
+        text: "소분류2-1-3",
+      },
+    ];
+    var so_2_2 = [
+      {
+        value: "so2_2_1",
+        text: "소분류2-2-1",
+      },
+      {
+        value: "so2_2_2",
+        text: "소분류2-2-2",
+      },
+      {
+        value: "so2_2_3",
+        text: "소분류2-2-3",
+      },
+    ];
+    var so_3_1 = [
+      {
+        value: "so3_1_1",
+        text: "소분류3-1-1",
+      },
+      {
+        value: "so3_1_2",
+        text: "소분류3-1-2",
+      },
+      {
+        value: "so3_1_3",
+        text: "소분류3-1-3",
+      },
+    ];
+    var so_3_2 = [
+      {
+        value: "so3_2_1",
+        text: "소분류3-2-1",
+      },
+      {
+        value: "so3_2_2",
+        text: "소분류3-2-2",
+      },
+      {
+        value: "so3_2_3",
+        text: "소분류3-2-3",
+      },
+    ];
+    var so = {
+      jung1_1: so_1_1,
+      jung1_2: so_1_2,
+      jung2_1: so_2_1,
+      jung2_2: so_2_2,
+      jung3_1: so_3_1,
+      jung3_2: so_3_2,
+    };
+
+    $("#add").on("click", function (e) {
+      $("#gr_a").alopexGrid("dataAdd", {}, { _index: { row: 0 } });
+      $("#gr_b").alopexGrid("dataAdd", {}, { _index: { row: 0 } });
+      $("#gr_c").alopexGrid("dataAdd", {}, { _index: { row: 0 } });
+    });
+
+    $("#gr_a").alopexGrid({
+      height: 200,
+      autoColumnIndex: true,
+      rowInlineEdit: true,
+      defaultColumnMapping: {
+        align: "center",
+      },
+      defaultState: {
+        dataAdd: { editing: true },
+        dataSet: { editing: true },
+      },
+      columnMapping: [
+        {
+          align: "center",
+          width: "30px",
+          selectorColumn: true,
+        },
+        {
+          key: "dae",
+          title: "대",
+          width: "100px",
+          render: {
+            type: "string",
+            rule: function (value, data) {
+              var render_data = [{ value: "" }];
+              render_data = render_data.concat(dae);
+              return render_data;
+            },
+          },
+          editable: {
+            type: "select",
+            rule: function (value, data) {
+              var editing_data = [{ value: "", text: "선택하세요" }];
+              editing_data = editing_data.concat(dae);
+              return editing_data;
+            },
+          },
+          editedValue: function (cell) {
+            return $(cell).find("select option").filter(":selected").val();
+          },
+        },
+        {
+          key: "jung",
+          title: "중",
+          width: "100px",
+          render: {
+            type: "string",
+            rule: function (value, data) {
+              var render_data = [{ value: "" }];
+              var currentData = AlopexGrid.currentData(data);
+              if (jung[currentData.dae]) {
+                render_data = render_data.concat(jung[currentData.dae]);
+              }
+              return render_data;
+            },
+          },
+          editable: {
+            type: "select",
+            rule: function (value, data) {
+              var editing_data = [{ value: "", text: "선택하세요" }];
+              var currentData = AlopexGrid.currentData(data);
+              if (jung[currentData.dae]) {
+                editing_data = editing_data.concat(jung[currentData.dae]);
+              }
+              return editing_data;
+            },
+          },
+          editedValue: function (cell) {
+            return $(cell).find("select option").filter(":selected").val();
+          },
+          refreshBy: "dae",
+        },
+        {
+          key: "so",
+          title: "소",
+          width: "100px",
+          render: {
+            type: "string",
+            rule: function (value, data) {
+              var render_data = [{ value: "" }];
+              var currentData = AlopexGrid.currentData(data);
+              if (so[currentData.jung]) {
+                render_data = render_data.concat(so[currentData.jung]);
+              }
+              return render_data;
+            },
+          },
+          editable: {
+            type: "select",
+            rule: function (value, data) {
+              var editing_data = [{ value: "", text: "선택하세요" }];
+              var currentData = AlopexGrid.currentData(data);
+              if (so[currentData.jung]) {
+                editing_data = editing_data.concat(so[currentData.jung]);
+              }
+              return editing_data;
+            },
+          },
+          editedValue: function (cell) {
+            return $(cell).find("select option").filter(":selected").val();
+          },
+          refreshBy: ["dae", "jung"],
+        },
+      ],
+    });
+    $("#gr_b").alopexGrid({
+      height: 200,
+      autoColumnIndex: true,
+      rowInlineEdit: true,
+      defaultColumnMapping: {
+        align: "center",
+      },
+      defaultState: {
+        dataAdd: { editing: true },
+        dataSet: { editing: true },
+      },
+      columnMapping: [
+        {
+          align: "center",
+          width: "30px",
+          selectorColumn: true,
+        },
+        {
+          key: "dae",
+          title: "대",
+          width: "100px",
+          render: {
+            type: "string",
+            rule: function (value, data) {
+              var render_data = [{ value: "" }];
+              render_data = render_data.concat(dae);
+              return render_data;
+            },
+          },
+          editable: function (value, data, render, mapping, grid) {
+            var $select = $("<select>");
+            $select.append('<option value="">선택하세요</option>');
+            if (dae && dae.length > 0) {
+              for (var i = 0, l = dae.length; i < l; i++) {
+                $select.append(
+                  '<option value="' +
+                    dae[i].value +
+                    '">' +
+                    dae[i].text +
+                    "</option>"
+                );
+              }
+            }
+            return $select;
+          },
+          editedValue: function (cell) {
+            return $(cell).find("select option").filter(":selected").val();
+          },
+        },
+        {
+          key: "jung",
+          title: "중",
+          width: "100px",
+          render: {
+            type: "string",
+            rule: function (value, data) {
+              var render_data = [{ value: "" }];
+              var currentData = AlopexGrid.currentData(data);
+              if (jung[currentData.dae]) {
+                render_data = render_data.concat(jung[currentData.dae]);
+              }
+              return render_data;
+            },
+          },
+          editable: function (value, data, render, mapping, grid) {
+            var currentData = AlopexGrid.currentData(data);
+            var $select = $("<select>");
+            $select.append('<option value="">선택하세요</option>');
+            if (jung[currentData.dae] && jung[currentData.dae].length > 0) {
+              for (var i = 0, l = jung[currentData.dae].length; i < l; i++) {
+                $select.append(
+                  '<option value="' +
+                    jung[currentData.dae][i].value +
+                    '">' +
+                    jung[currentData.dae][i].text +
+                    "</option>"
+                );
+              }
+            }
+            return $select;
+          },
+          editedValue: function (cell) {
+            return $(cell).find("select option").filter(":selected").val();
+          },
+          refreshBy: "dae",
+        },
+        {
+          key: "so",
+          title: "소",
+          width: "100px",
+          render: {
+            type: "string",
+            rule: function (value, data) {
+              var render_data = [{ value: "" }];
+              var currentData = AlopexGrid.currentData(data);
+              if (so[currentData.jung]) {
+                render_data = render_data.concat(so[currentData.jung]);
+              }
+              return render_data;
+            },
+          },
+          editable: function (value, data, render, mapping, grid) {
+            var currentData = AlopexGrid.currentData(data);
+            var $select = $("<select>");
+            $select.append('<option value="">선택하세요</option>');
+            if (so[currentData.jung] && so[currentData.jung].length > 0) {
+              for (var i = 0, l = so[currentData.jung].length; i < l; i++) {
+                $select.append(
+                  '<option value="' +
+                    so[currentData.jung][i].value +
+                    '">' +
+                    so[currentData.jung][i].text +
+                    "</option>"
+                );
+              }
+            }
+            return $select;
+          },
+          editedValue: function (cell) {
+            return $(cell).find("select option").filter(":selected").val();
+          },
+          refreshBy: ["dae", "jung"],
+        },
+      ],
+    });
+    $("#gr_c").alopexGrid({
+      height: 200,
+      autoColumnIndex: true,
+      rowInlineEdit: true,
+      defaultColumnMapping: {
+        align: "center",
+      },
+      defaultState: {
+        dataAdd: { editing: true },
+        dataSet: { editing: true },
+      },
+      columnMapping: [
+        {
+          align: "center",
+          width: "30px",
+          selectorColumn: true,
+        },
+        {
+          key: "dae",
+          title: "대",
+          width: "100px",
+          render: {
+            type: "string",
+            rule: function (value, data) {
+              var render_data = [{ value: "" }];
+              render_data = render_data.concat(dae);
+              return render_data;
+            },
+          },
+          editable: function (value, data, render, mapping, grid) {
+            var selectString = "<select>";
+            selectString += '<option value="">선택하세요</option>';
+            if (dae && dae.length > 0) {
+              for (var i = 0, l = dae.length; i < l; i++) {
+                selectString +=
+                  '<option value="' +
+                  dae[i].value +
+                  '">' +
+                  dae[i].text +
+                  "</option>";
+              }
+            }
+            selectString += "</select>";
+            return selectString;
+          },
+          editedValue: function (cell) {
+            return $(cell).find("select option").filter(":selected").val();
+          },
+        },
+        {
+          key: "jung",
+          title: "중",
+          width: "100px",
+          render: {
+            type: "string",
+            rule: function (value, data) {
+              var render_data = [{ value: "" }];
+              var currentData = AlopexGrid.currentData(data);
+              if (jung[currentData.dae]) {
+                render_data = render_data.concat(jung[currentData.dae]);
+              }
+              return render_data;
+            },
+          },
+          editable: function (value, data, render, mapping, grid) {
+            var currentData = AlopexGrid.currentData(data);
+            var selectString = "<select>";
+            selectString += '<option value="">선택하세요</option>';
+            if (jung[currentData.dae] && jung[currentData.dae].length > 0) {
+              for (var i = 0, l = jung[currentData.dae].length; i < l; i++) {
+                selectString +=
+                  '<option value="' +
+                  jung[currentData.dae][i].value +
+                  '">' +
+                  jung[currentData.dae][i].text +
+                  "</option>";
+              }
+            }
+            selectString += "</select>";
+            return selectString;
+          },
+          editedValue: function (cell) {
+            return $(cell).find("select option").filter(":selected").val();
+          },
+          refreshBy: "dae",
+        },
+        {
+          key: "so",
+          title: "소",
+          width: "100px",
+          render: {
+            type: "string",
+            rule: function (value, data) {
+              var render_data = [{ value: "" }];
+              var currentData = AlopexGrid.currentData(data);
+              if (so[currentData.jung]) {
+                render_data = render_data.concat(so[currentData.jung]);
+              }
+              return render_data;
+            },
+          },
+          editable: function (value, data, render, mapping, grid) {
+            var currentData = AlopexGrid.currentData(data);
+            var selectString = "<select>";
+            selectString += '<option value="">선택하세요</option>';
+            if (so[currentData.jung] && so[currentData.jung].length > 0) {
+              for (var i = 0, l = so[currentData.jung].length; i < l; i++) {
+                selectString +=
+                  '<option value="' +
+                  so[currentData.jung][i].value +
+                  '">' +
+                  so[currentData.jung][i].text +
+                  "</option>";
+              }
+            }
+            selectString += "</select>";
+            return selectString;
+          },
+          editedValue: function (cell) {
+            return $(cell).find("select option").filter(":selected").val();
+          },
+          refreshBy: ["dae", "jung"],
+        },
+      ],
+    });
+  </script>
+</html>
