@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <select id="testSel">
+      <option value="">선택하세요.</option>
+      <option value="banana">바나나</option>
+      <option value="apple">사과</option>
+      <option value="peach">복숭아</option>
+      <option value="orange">오렌지</option>
+    </select>
+
+    <button type="button" id="addOpt">과일 옵션 추가</button>
+    <button type="button" id="selPeach">복숭아 선택</button>
+    <button type="button" id="delOpt">과일 옵션 삭제</button>
+    <button type="button" id="delLastOpt">마지막 과일 옵션 삭제</button>
+
+    <script>
+      var fruitList = [
+        { oKey: "banana", oVal: "바나나" },
+        { oKey: "apple", oVal: "사과" },
+        { oKey: "peach", oVal: "복숭아" },
+        { oKey: "orange", oVal: "오렌지" },
+      ];
+
+      var targetSel = document.getElementById("testSel");
+
+      //옵션 동적으로 생성하기
+      document.getElementById("addOpt").addEventListener("click", function () {
+        if (targetSel.children.length === 1) {
+          fruitList.forEach(function (list) {
+            var opt = document.createElement("option");
+            opt.setAttribute("value", list.oKey);
+            opt.innerText = list.oVal;
+            targetSel.append(opt);
+          });
+        }
+      });
+
+      document
+        .getElementById("selPeach")
+        .addEventListener("click", function () {
+          for (var i = 0; i < targetSel.children.length; i++) {
+            if (targetSel.children[i].value === "peach") {
+              targetSel.children[i].setAttribute("selected", "selected");
+            }
+          }
+        });
+
+      document.getElementById("delOpt").addEventListener("click", function () {
+        var targetSelArr = document.querySelectorAll("#testSel option");
+        //console.log(targetSelArr);
+        targetSelArr.forEach(function (v, i) {
+          //예외적으로 node같은 경우는 유사배열이라도 프로토타입에 forEach가 있기 때문에 가능하다.
+          if (i != 0) this.removeChild(v);
+        }, targetSel);
+      });
+
+      document
+        .getElementById("delLastOpt")
+        .addEventListener("click", function () {
+          if (targetSel.children.length > 1 && targetSel.firstChild) {
+            targetSel.removeChild(targetSel.lastChild);
+          }
+        });
+    </script>
+  </body>
+</html>
